@@ -23,10 +23,23 @@ const router = new VueRouter({
 	],
 })
 
-new Vue({
+let swUpdated = false
+
+router.beforeEach((to, from, next) => {
+	if (swUpdated) {
+		window.location.href = '/#' + to.fullPath
+		window.location.reload()
+	} else {
+		next()
+	}
+})
+
+const app = new Vue({
 	el: '#app',
+	components: { App },
+	template: '<app :message="message" :show="show"></app>',
+	data: { message: '', show: false },
 	router,
-	render: (h) => h(App),
 })
 
 if ('serviceWorker' in navigator) {
