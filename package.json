@@ -23,9 +23,11 @@
 		"css-loader": "^6.10.0",
 		"file-loader": "^1.1.5",
 		"style-loader": "^3.3.4",
+		"sw-precache-webpack-plugin": "^0.7.2",
 		"vue-loader": "^17.4.2",
 		"vue-template-compiler": "^2.5.2",
-		"webpack": "^3.8.1",
+		"webpack": "^5.90.3",
+		"webpack-cli": "^5.1.4",
 		"webpack-dev-server": "^5.0.3"
 	}
 }

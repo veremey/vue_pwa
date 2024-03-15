@@ -16,15 +16,36 @@ Vue.use(VueRouter)
 Vue.use(Vuetify)
 
 const router = new VueRouter({
-  routes: [
-    { path: '/images', component: Images },
-    { path: '/images/:id', component: Details, props: true },
-    { path: '/', redirect: '/images' }
-  ]
+	routes: [
+		{ path: '/images', component: Images },
+		{ path: '/images/:id', component: Details, props: true },
+		{ path: '/', redirect: '/images' },
+	],
 })
 
 new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
+	el: '#app',
+	router,
+	render: (h) => h(App),
 })
+
+if ('serviceWorker' in navigator) {
+	navigator.serviceWorker.register('/service-worker.js').then((reg) => {
+		reg.onupdatefound = () => {
+			const sw = reg.installing
+
+			sw.onstatechange = () => {
+				if (sw.state === 'installed') {
+					if (navigator.serviceWorker.controller) {
+						app.message = 'New version is available. Reload to activate it.'
+						app.show = true
+						swUpdated = true
+					} else {
+						app.message = 'Content is now available offline'
+						app.show = true
+					}
+				}
+			}
+		}
+	})
+}
