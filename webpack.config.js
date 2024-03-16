@@ -76,7 +76,23 @@ if (process.env.NODE_ENV === 'production') {
 			cacheId: 'my-app',
 			filepath: 'service-worker.js',
 			staticFileGlobs: ['index.html', 'manifest.json', 'dest/**/*.{css, js}'],
-			stripPrefix: '/',
+			runtimeCaching: [
+				{
+					urlPattern: /^https:\/\/(fonts|picsum)/,
+					handler: 'networkFirst',
+				},
+				{
+					urlPattern: /^https:\/\/(images|source)/,
+					handler: 'fastest',
+					options: {
+						cache: {
+							name: 'awesome-image-cache',
+							maxEntries: 4, // lru
+						},
+					},
+				},
+			],
+			stripPrefix: '/', // removes the dist/ path
 		}),
 	])
 }
